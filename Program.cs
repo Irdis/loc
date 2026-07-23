@@ -20,6 +20,9 @@ public class Program
         const int bufLen = 4096;
         var buf = new char[bufLen];
         EnumeratePaths(locArgs, filePath => {
+            if (!File.Exists(filePath))
+                return;
+
             if (locArgs.Extensions != null && locArgs.Extensions.All(ext => !filePath.EndsWith("." + ext)))
                 return;
 
@@ -73,6 +76,8 @@ public class Program
 
                 if (filePath == null)
                     break;
+
+                filePath = filePath.Trim('"');
 
                 func(filePath);
             }
